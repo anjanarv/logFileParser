@@ -1,4 +1,7 @@
-const { findMostVisitedIpAddress, findMostVisitedURL } = require("./index");
+const {
+  findMostVisitedAndUniqueIpAddress,
+  findMostVisitedAndUniqueURL
+} = require("./index");
 
 let testIPAddressList = [
   "203.46.78.200",
@@ -25,11 +28,13 @@ let testUrlList = [
 ];
 
 test("find most visited ip address", async () => {
-  const returnedIPAddressList = findMostVisitedIpAddress(testIPAddressList);
+  const returnedIPAddressList = findMostVisitedAndUniqueIpAddress(
+    testIPAddressList
+  );
   expect(returnedIPAddressList).toMatchSnapshot();
 });
 
 test("find most visited url patterns", async () => {
-  const returnedURLList = findMostVisitedURL(testUrlList);
+  const returnedURLList = findMostVisitedAndUniqueURL(testUrlList);
   expect(returnedURLList).toMatchSnapshot();
 });

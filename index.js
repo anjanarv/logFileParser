@@ -1,4 +1,4 @@
-const es = require("event-stream");
+const eventStream = require("event-stream");
 const fs = require("fs");
 const ipregex = require("ip-regex");
 const {
@@ -19,9 +19,9 @@ let regexUrlPattern =
 
 const readAndProcessFile = () => {
   fs.createReadStream("data/programming-task-example-data.log")
-    .pipe(es.split())
+    .pipe(eventStream.split())
     .pipe(
-      es.mapSync(line => {
+      eventStream.mapSync(line => {
         findUniqueIPAddresses(line);
         findURLPatternMatch(line);
       })
@@ -30,11 +30,11 @@ const readAndProcessFile = () => {
       console.log("Error in reading the file !!", error);
     })
     .on("end", () => {
-      const writeStream = fs.createWriteStream("report.json");
+      const writeStream = fs.createWriteStream("report.json"); // writing results to report
       writeStream.write(
         JSON.stringify({
-          ...findMostVisitedIpAddress(ipAddressList),
-          ...findMostVisitedURL(urlPatternList)
+          ...findMostVisitedAndUniqueIpAddress(ipAddressList),
+          ...findMostVisitedAndUniqueURL(urlPatternList)
         })
       );
       writeStream.end();
@@ -44,10 +44,12 @@ const readAndProcessFile = () => {
     });
 };
 
+//Find unique ip addresses in a line using ip-regex
 const findUniqueIPAddresses = line => {
   ipAddressList.push(line.match(ipregex({ exact: true })));
 };
 
+//Find unique urls in a line using regex pattern
 const findURLPatternMatch = line => {
   let matches = (line.match(regexUrlPattern) || []).map(e =>
     e.replace(regexUrlPattern, "$1")
@@ -55,23 +57,25 @@ const findURLPatternMatch = line => {
   urlPatternList.push(matches);
 };
 
-const findMostVisitedIpAddress = ipAddressList => {
+//Find ip addresses most visited and unique ip addreses
+const findMostVisitedAndUniqueIpAddress = ipAddressList => {
   return {
     uniqueIPAdresses: uniq(reject(flatten(ipAddressList), isEmpty)),
     mostVisitedIPAddress: extractMostVisited(ipAddressList, "ipAddress")
   };
 };
 
-const findMostVisitedURL = urlPatternList => {
+//Find url patterns most visited and unique ip addreses
+const findMostVisitedAndUniqueURL = urlPatternList => {
   return {
     uniqueURL: uniq(reject(flatten(urlPatternList), isEmpty)),
     mostVisitedURL: extractMostVisited(urlPatternList, "url")
   };
 };
 
+// generic  method to extract most visited for ip address and url lists
 const extractMostVisited = (list, keyForList) => {
   const flattenedList = flatten(reject(list, isEmpty));
-
   const mappedValues = map(countBy(flattenedList), (count, key) => {
     return { [keyForList]: key, count: count };
   });
@@ -82,7 +86,7 @@ const extractMostVisited = (list, keyForList) => {
 
 module.exports = {
   readAndProcessFile,
-  findMostVisitedIpAddress,
-  findMostVisitedURL,
+  findMostVisitedAndUniqueIpAddress,
+  findMostVisitedAndUniqueURL,
   extractMostVisited
 };
