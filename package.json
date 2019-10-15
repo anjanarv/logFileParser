@@ -1,0 +1,18 @@
+{
+  "name": "logparser",
+  "version": "1.0.0",
+  "description": "Used to parse the log file and return a report on most visited URL and most visisted IP Addresses",
+  "main": "y",
+  "scripts": {
+    "test": "jest",
+    "start": "node index.js"
+  },
+  "author": "Anjana",
+  "license": "ISC",
+  "dependencies": {
+    "event-stream": "^4.0.1",
+    "ip-regex": "^4.1.0",
+    "jest": "^24.9.0",
+    "lodash": "^4.17.15"
+  }
+}

@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`find most visited ip address 1`] = `
+Object {
+  "mostVisitedIPAddress": Array [
+    Object {
+      "count": 3,
+      "ipAddress": "173.46.78.100",
+    },
+    Object {
+      "count": 2,
+      "ipAddress": "23.46.78.200",
+    },
+    Object {
+      "count": 1,
+      "ipAddress": "203.46.78.200",
+    },
+  ],
+  "uniqueIPAdresses": Array [
+    "203.46.78.200",
+    "173.46.78.100",
+    "100.46.78.200",
+    "23.46.78.200",
+  ],
+}
+`;
+
+exports[`find most visited url patterns 1`] = `
+Object {
+  "mostVisitedURL": Array [
+    Object {
+      "count": 3,
+      "url": "GET /faq/ HTTP/1.1",
+    },
+    Object {
+      "count": 2,
+      "url": "GET /newsletter/ HTTP/1.1",
+    },
+    Object {
+      "count": 1,
+      "url": "GET /download/counter/ HTTP/1.1",
+    },
+  ],
+  "uniqueURL": Array [
+    "GET /download/counter/ HTTP/1.1",
+    "GET /newsletter/ HTTP/1.1",
+    "GET /docs/manage-websites/ HTTP/1.1",
+    "GET /faq/ HTTP/1.1",
+  ],
+}
+`;
