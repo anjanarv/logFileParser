@@ -1,7 +1,7 @@
 const {
   findMostVisitedAndUniqueIpAddress,
   findMostVisitedAndUniqueURL
-} = require("./index");
+} = require("./readFile");
 
 let testIPAddressList = [
   "203.46.78.200",
